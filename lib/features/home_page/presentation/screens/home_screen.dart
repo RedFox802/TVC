@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tv/features/help_page/presentation/screens/help_page_screen.dart';
+import 'package:tv/features/help_page/presentation/screens/help_screen.dart';
 
 import '../../../../components/app_text_style.dart';
 import '../../../../gen/assets.gen.dart';
