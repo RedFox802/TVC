@@ -13,6 +13,8 @@ class HelpScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: OnBoardingSlider(
+        totalPage: 6,
+        speed: 1,
         headerBackgroundColor: Colors.grey.shade200,
         finishButtonText: 'Перейти к базе данных',
         finishButtonColor: Colors.red.shade800,
@@ -59,8 +61,6 @@ class HelpScreen extends StatelessWidget {
             child: Assets.images.imLogo.image(),
           ),
         ],
-        totalPage: 6,
-        speed: 1,
         pageBodies: const [
           SliderItem(
             title: 'Главная страница',

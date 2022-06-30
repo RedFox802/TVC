@@ -16,7 +16,8 @@ class SliderItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: subTitle!=null ? 60.h : 120.h, horizontal: 14.w),
+      padding: EdgeInsets.symmetric(
+          vertical: subTitle != null ? 60.h : 120.h, horizontal: 14.w),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
@@ -28,8 +29,7 @@ class SliderItem extends StatelessWidget {
           SizedBox(height: 20.h),
           if (subTitle != null)
             Text(
-              subTitle ??
-                  'Реализована удобная визуализация как всех видеозаписей так и эфиров',
+              subTitle!,
               textAlign: TextAlign.center,
               style: AppTextStyles.normalW600S14
                   .copyWith(color: Colors.grey.shade600),

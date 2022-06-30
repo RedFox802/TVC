@@ -1,6 +1,3 @@
-
-import 'dart:developer';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tv/features/home_page/domain/entity/login_entity.dart';
 import 'package:tv/features/home_page/domain/state/login_state.dart';
@@ -17,6 +14,7 @@ class LoginCubit extends Cubit<LoginState> {
 
   Future<void> loadLoginData() async {
     try {
+      emit(state.copyWith(loading: true));
       List<String> data = await _loginDataStorage.loadData();
       if (data.isNotEmpty) {
         LoginEntity currentEntity = LoginEntity(
@@ -25,7 +23,7 @@ class LoginCubit extends Cubit<LoginState> {
           login: data[2],
           password: data[3],
         );
-        emit(state.copyWith(loginEntity: currentEntity));
+        emit(state.copyWith(loginEntity: currentEntity,loading: false));
       }
     } catch (e) {
       emit(state.copyWith(error: true));
@@ -35,13 +33,7 @@ class LoginCubit extends Cubit<LoginState> {
   Future<void> saveLoginData(
       String server, String database, String login, String password) async {
     try {
-      log('я тут');
-      log(server);
-      log(login);
-      log(database);
-      log(password);
       List<String> data = [server, database, login, password];
-      log(data.length.toString());
       await _loginDataStorage.saveData(data: data);
     } catch (e) {
       emit(state.copyWith(error: true));
