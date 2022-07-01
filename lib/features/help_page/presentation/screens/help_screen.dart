@@ -25,7 +25,7 @@ class HelpScreen extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (BuildContext context) {
-                return const GeneralScreen();
+                return GeneralScreen();
               },
             ),
             (route) => true,

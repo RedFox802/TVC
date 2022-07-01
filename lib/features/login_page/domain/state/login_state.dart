@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:tv/features/home_page/domain/entity/login_entity.dart';
+
+import '../entity/login_entity.dart';
 
 part 'login_state.freezed.dart';
 

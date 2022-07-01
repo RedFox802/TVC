@@ -204,6 +204,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.0"
+  dropdown_button2:
+    dependency: "direct main"
+    description:
+      name: dropdown_button2
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.6.2"
   easy_autocomplete:
     dependency: "direct main"
     description:
@@ -298,6 +305,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "5.5.3+2"
+  flutter_sliding_up_panel:
+    dependency: "direct main"
+    description:
+      name: flutter_sliding_up_panel
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.1"
   flutter_spinkit:
     dependency: "direct main"
     description:
@@ -747,6 +761,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"
+  we_slide:
+    dependency: "direct main"
+    description:
+      name: we_slide
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.3.0"
   web_socket_channel:
     dependency: transitive
     description:

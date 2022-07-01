@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tv/features/home_page/domain/entity/login_entity.dart';
-import 'package:tv/features/home_page/domain/state/login_state.dart';
+import 'package:tv/features/login_page/domain/state/login_state.dart';
 
 import '../data/login_data_storage.dart';
+import 'entity/login_entity.dart';
 
 class LoginCubit extends Cubit<LoginState> {
   final LoginDataStorage _loginDataStorage = LoginDataStorage();

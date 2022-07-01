@@ -5,7 +5,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:tv/components/app_errors_handler.dart';
 import 'package:tv/features/help_page/presentation/screens/help_screen.dart';
 
-import '../../../../components/app_text_style.dart';
+import '../../../../components/app_text_button.dart';
 import '../../../../gen/assets.gen.dart';
 import '../../domain/login_cubit.dart';
 import '../../domain/state/login_state.dart';
@@ -15,7 +15,7 @@ class LoginScreen extends StatefulWidget {
 
   const LoginScreen({
     Key? key,
-    this.isErrorScreen = true,
+    this.isErrorScreen = false,
   }) : super(key: key);
 
   @override
@@ -37,7 +37,9 @@ class _LoginScreenState extends State<LoginScreen> {
         child: BlocConsumer<LoginCubit, LoginState>(
           listener: (BuildContext context, LoginState state) {
             if (widget.isErrorScreen || state.error) {
-              AppError.showError('Произошла ошибка! Попробуйте повторно подключиться к базе данных!',context);
+              AppError.showError(
+                  'Произошла ошибка! Попробуйте повторно подключиться к базе данных!',
+                  context);
             }
           },
           builder: (BuildContext context, state) {
@@ -68,7 +70,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                 controller: _serverController,
                                 decoration: InputDecoration(
                                   focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.red.shade800),
+                                    borderSide:
+                                        BorderSide(color: Colors.red.shade800),
                                   ),
                                   labelText: 'Введите имя сервера',
                                   labelStyle: TextStyle(
@@ -80,7 +83,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                 controller: _databaseController,
                                 decoration: InputDecoration(
                                   focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.red.shade800),
+                                    borderSide:
+                                        BorderSide(color: Colors.red.shade800),
                                   ),
                                   labelText: 'Введите имя базы данных',
                                   labelStyle: TextStyle(
@@ -92,7 +96,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                 controller: _loginController,
                                 decoration: InputDecoration(
                                   focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.red.shade800),
+                                    borderSide:
+                                        BorderSide(color: Colors.red.shade800),
                                   ),
                                   labelText: 'Введите ваш логин',
                                   labelStyle: TextStyle(
@@ -105,7 +110,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                 controller: _passwordController,
                                 decoration: InputDecoration(
                                   focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.red.shade800),
+                                    borderSide:
+                                        BorderSide(color: Colors.red.shade800),
                                   ),
                                   labelText: 'Введите ваш пароль',
                                   labelStyle: TextStyle(
@@ -117,59 +123,36 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                         const Spacer(),
-                        Padding(
-                          padding: EdgeInsets.only(bottom: 40.h, right: 20.w, left: 20.w),
-                          child: SizedBox(
-                            height: 50.h,
-                            width: MediaQuery.of(context).size.width,
-                            child: ElevatedButton(
-                              onPressed: () async {
-                                if (_serverController.text.isNotEmpty &&
-                                    _databaseController.text.isNotEmpty &&
-                                    _loginController.text.isNotEmpty &&
-                                    _passwordController.text.isNotEmpty) {
-                                  await context
-                                      .read<LoginCubit>()
-                                      .saveLoginData(
-                                          _serverController.text,
-                                          _databaseController.text,
-                                          _loginController.text,
-                                          _passwordController.text);
+                        AppRedTextButton(
+                          text: "Создать подключение",
+                          onPressed: () async {
+                            if (_serverController.text.isNotEmpty &&
+                                _databaseController.text.isNotEmpty &&
+                                _loginController.text.isNotEmpty &&
+                                _passwordController.text.isNotEmpty) {
+                              await context
+                                  .read<LoginCubit>()
+                                  .saveLoginData(
+                                  _serverController.text,
+                                  _databaseController.text,
+                                  _loginController.text,
+                                  _passwordController.text);
 
-                                  Navigator.pushAndRemoveUntil(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (BuildContext context) {
-                                        return HelpScreen();
-                                      },
-                                    ),
-                                    (route) => true,
-                                  );
-                                }
-                                else{
-                                  AppError.showError('Необходимо заполнить все текстовые поля!',context);
-                                }
-                              },
-                              style: ButtonStyle(
-                                backgroundColor:
-                                    MaterialStateProperty.all<Color>(
-                                        Colors.red.shade800),
-                                shape:
-                                    MaterialStateProperty.all<OutlinedBorder>(
-                                  RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(8.r),
-                                    ),
-                                  ),
+                              Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (BuildContext context) {
+                                    return HelpScreen();
+                                  },
                                 ),
-                              ),
-                              child: Text(
-                                "Создать подключение",
-                                style: AppTextStyles.normalW600S14
-                                    .copyWith(color: Colors.white),
-                              ),
-                            ),
-                          ),
+                                    (route) => true,
+                              );
+                            } else {
+                              AppError.showError(
+                                  'Необходимо заполнить все текстовые поля!',
+                                  context);
+                            }
+                          },
                         ),
                       ],
                     ),
