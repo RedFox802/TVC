@@ -25,7 +25,7 @@ class HelpScreen extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (BuildContext context) {
-                return GeneralScreen();
+                return const GeneralScreen();
               },
             ),
             (route) => true,
@@ -38,7 +38,7 @@ class HelpScreen extends StatelessWidget {
         background: [
           SizedBox(
             height: MediaQuery.of(context).size.height / 2,
-            child: Assets.images.imLogo.image(),
+            child: Image.network('https://i.gifer.com/XOsX.gif'),
           ),
           SizedBox(
             height: MediaQuery.of(context).size.height / 2,
@@ -79,7 +79,7 @@ class HelpScreen extends StatelessWidget {
           SliderItem(
             title: 'Сортировка',
             subTitle:
-                'Вы можете сортировать данные по возрастанию и убыванию с помощью данной кнопки',
+                'Вы можете сортировать данные с помощью данной кнопки',
           ),
           SliderItem(
             title: 'Фильтры',

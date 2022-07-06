@@ -9,5 +9,7 @@ class VideoListState with _$VideoListState {
     @Default(false) final bool error,
     @Default(false) final bool loading,
     @Default([]) final List<VideoRecordingEntity> videos,
+    @Default({}) final Map<String,String> filters,
+    @Default([]) final List<String> sorts,
   }) = _VideoListState;
 }

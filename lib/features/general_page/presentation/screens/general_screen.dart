@@ -1,10 +1,10 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_sliding_up_panel/sliding_up_panel_widget.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:kumi_popup_window/kumi_popup_window.dart';
+import 'package:tv/components/app_constants.dart';
 import 'package:tv/components/search_text_field.dart';
 import 'package:tv/features/general_page/domain/state/video_list_state.dart';
 import 'package:tv/features/general_page/domain/video_list_cubit.dart';
@@ -13,6 +13,8 @@ import 'package:tv/features/general_page/presentation/components/video_recording
 import '../../../filters_penel/presentation/filters_panel.dart';
 import '../../../login_page/presentation/screens/login_screen.dart';
 import '../../../video_details_page/presentation/screens/video_details_screen.dart';
+import '../components/app_button_container.dart';
+import '../components/sort_menu_container.dart';
 
 class GeneralScreen extends StatefulWidget {
   const GeneralScreen({Key? key}) : super(key: key);
@@ -23,11 +25,15 @@ class GeneralScreen extends StatefulWidget {
 
 class _GeneralScreenState extends State<GeneralScreen> {
   final SlidingUpPanelController _panelController = SlidingUpPanelController();
+  final List<String> selectedItems = [];
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+
     return Scaffold(
-      backgroundColor: Colors.grey.shade500,
+      backgroundColor: Colors.grey.shade50,
       body: BlocProvider<VideoListCubit>(
         create: (BuildContext context) => VideoListCubit()..getVideoList(),
         child: BlocConsumer<VideoListCubit, VideoListState>(
@@ -53,44 +59,71 @@ class _GeneralScreenState extends State<GeneralScreen> {
                     child: Column(
                       children: [
                         Container(
-                          height: MediaQuery.of(context).size.height / 8,
-                          width: MediaQuery.of(context).size.width,
+                          height: height / 8,
+                          width: width,
                           decoration: BoxDecoration(
-                            color: Colors.grey.shade400,
+                            color: Colors.red.shade700,
                             borderRadius: BorderRadius.only(
                               bottomLeft: Radius.circular(20.r),
                               bottomRight: Radius.circular(20.r),
                             ),
                           ),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               AppSearchTextField(
-                                width: MediaQuery.of(context).size.width * 0.75,
+                                width: width * 0.65,
                               ),
-                              Container(
-                                width: 50.w,
-                                height: 50.w,
-                                decoration: BoxDecoration(
-                                  color: Colors.grey.shade300,
-                                  border: Border.all(color: Colors.white),
-                                  borderRadius: BorderRadius.circular(16.r),
-                                ),
-                                child: IconButton(
-                                  icon: const Icon(Icons.filter_alt),
-                                  onPressed: () {
-                                    log('${_panelController.status}');
-                                    if (_panelController.status ==
-                                            SlidingUpPanelStatus.expanded ||
-                                        _panelController.status ==
-                                            SlidingUpPanelStatus.collapsed) {
-                                      _panelController.hide();
-                                    } else {
-                                      _panelController.expand();
-                                    }
-                                    log('${_panelController.status}');
-                                  },
-                                ),
+                              AppButtonContainer(
+                                icon: Icons.sort,
+                                onPressed: () {
+                                  showPopupWindow(
+                                    context,
+                                    gravity: KumiPopupGravity.center,
+                                    curve: Curves.bounceIn,
+                                    bgColor: Colors.grey.withOpacity(0.5),
+                                    clickOutDismiss: true,
+                                    clickBackDismiss: true,
+                                    underAppBar: true,
+                                    duration: const Duration(milliseconds: 500),
+                                    childFun: (pop) {
+                                      return StatefulBuilder(
+                                        key: GlobalKey(),
+                                        builder: (popContext, popState) {
+                                          return SortMenuContainer(
+                                            selectedItems: selectedItems,
+                                            items: AppConstants.allFields, onPressed: () {
+                                            if (selectedItems.isNotEmpty) {
+                                              List<String> fields = [];
+                                              for (var item in selectedItems) {
+                                                fields.add(AppConstants.dbFields[item]!);
+                                              }
+                                              context
+                                                  .read<VideoListCubit>()
+                                                  .getSortedVideoList(fields);
+                                            } else {
+                                              context.read<VideoListCubit>().getVideoList();
+                                            }
+                                          },
+                                          );
+                                        },
+                                      );
+                                    },
+                                  );
+                                },
+                              ),
+                              AppButtonContainer(
+                                icon: Icons.filter_alt,
+                                onPressed: () {
+                                  if (_panelController.status ==
+                                          SlidingUpPanelStatus.expanded ||
+                                      _panelController.status ==
+                                          SlidingUpPanelStatus.collapsed) {
+                                    _panelController.hide();
+                                  } else {
+                                    _panelController.expand();
+                                  }
+                                },
                               ),
                             ],
                           ),
@@ -98,10 +131,10 @@ class _GeneralScreenState extends State<GeneralScreen> {
                         Expanded(
                           child: ListView.builder(
                             itemCount: state.videos.length,
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 16.w, vertical: 10.h),
+                            padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.h),
                             itemBuilder: (BuildContext context, int index) {
                               return Dismissible(
+                                direction: DismissDirection.endToStart,
                                 key: UniqueKey(),
                                 onDismissed: (DismissDirection direction) {
                                   Navigator.push(
@@ -114,7 +147,9 @@ class _GeneralScreenState extends State<GeneralScreen> {
                                     ),
                                   );
                                 },
-                                child: const VideoRecordingContainer(),
+                                child: VideoRecordingContainer(
+                                  entity: state.videos[index],
+                                ),
                               );
                             },
                           ),

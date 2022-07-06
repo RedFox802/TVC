@@ -8,12 +8,14 @@ class AppDropField extends StatefulWidget {
   final List<String> itemsList;
   final void Function(String?) onChanged;
   final String description;
+  final bool first;
 
   const AppDropField({
     Key? key,
     required this.itemsList,
     required this.description,
     required this.onChanged,
+    this.first = false,
   }) : super(key: key);
 
   @override
@@ -26,7 +28,8 @@ class _AppDropFieldState extends State<AppDropField> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Divider(),
+        if(!widget.first)
+          const Divider(),
         Padding(
           padding: EdgeInsets.only(left: 10.w),
           child: Text(
@@ -47,7 +50,6 @@ class _AppDropFieldState extends State<AppDropField> {
           ),
           decoration: InputDecoration(
             isDense: true,
-            contentPadding: EdgeInsets.zero,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(16.r),
             ),

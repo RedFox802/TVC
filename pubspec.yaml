@@ -29,6 +29,10 @@ dependencies:
   we_slide: ^2.3.0
   flutter_sliding_up_panel: ^2.0.1
   dropdown_button2: ^1.6.2
+  cloud_firestore: ^3.2.1
+  firebase_core: ^1.19.1
+  expandable_fab_menu: ^0.0.1
+  kumi_popup_window: ^2.0.1
 
 dev_dependencies:
   flutter_test:

@@ -17,6 +17,7 @@ class VideoRecordingEntity with _$VideoRecordingEntity {
     @Default('') final String creditsStatus,
     @Default('') final String commerceStatus,
     @Default('') final String digitizationStatus,
+    @Default('') final String subtitles,
     @Default('') final String productionType,
     @Default('') final String registrationDate,
     @Default('') final String responsible,
