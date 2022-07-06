@@ -20,14 +20,15 @@ class VideosFirebaseRepository {
     final videos = _fireStore.collection('videos');
     Query<Map<String, dynamic>> filteredVideos = videos;
 
-    if(sorts.isNotEmpty){
-      for(var sort in sorts){
+    if (sorts.isNotEmpty) {
+      for (var sort in sorts) {
         filteredVideos = filteredVideos.orderBy(sort);
       }
     }
-    if(filters.isNotEmpty){
-      for(var filter in filters.keys){
-        filteredVideos = filteredVideos.where(filter, isEqualTo: filters[filter]);
+    if (filters.isNotEmpty) {
+      for (var filter in filters.keys) {
+        filteredVideos =
+            filteredVideos.where(filter, isEqualTo: filters[filter]);
       }
     }
 
@@ -84,5 +85,23 @@ class VideosFirebaseRepository {
         .toList()
         .map((json) => VideoRecordingEntity.fromJson(json))
         .toList();
+  }
+
+  Future<VideoRecordingEntity> search(String searchString, bool isId) async {
+    Query<Map<String, dynamic>> searchedVideo = _fireStore.collection('videos');
+    if (isId) {
+      searchedVideo =
+          searchedVideo.where('id', isEqualTo: searchString).limit(1);
+    } else {
+      searchedVideo =
+          searchedVideo.where('name', isEqualTo: searchString).limit(1);
+    }
+    final searchedVideoSnapshot = await searchedVideo.get();
+    if (searchedVideoSnapshot.docs.isNotEmpty) {
+      return VideoRecordingEntity.fromJson(
+          searchedVideoSnapshot.docs.first.data());
+    } else {
+      return const VideoRecordingEntity();
+    }
   }
 }

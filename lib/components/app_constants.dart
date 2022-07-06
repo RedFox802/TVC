@@ -1,4 +1,7 @@
 abstract class AppConstants {
+
+  static RegExp idPattern = RegExp(r"^\d{5}$");
+
   static const List<String> allFields = [
     'Название',
     'Дата регистрации',

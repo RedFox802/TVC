@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:tv/components/app_text_style.dart';
 import 'package:tv/features/search_page/domain/search_cubit.dart';
 import 'package:tv/features/search_page/domain/state/search_state.dart';
 
@@ -49,7 +48,8 @@ class _SearchScreenState extends State<SearchScreen> {
                 child: Column(
                   children: [
                     Container(
-                      padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 10.w),
+                      padding: EdgeInsets.symmetric(
+                          vertical: 16.h, horizontal: 10.w),
                       height: MediaQuery.of(context).size.height / 8,
                       width: MediaQuery.of(context).size.width,
                       decoration: BoxDecoration(
@@ -64,7 +64,9 @@ class _SearchScreenState extends State<SearchScreen> {
                         textEditingController: controller,
                         onChanged: (String str) {},
                         onComplete: () {
-                          context.read<SearchCubit>().getVideoList();
+                          context
+                              .read<SearchCubit>()
+                              .searchVideoRecording(controller.text);
                         },
                       ),
                     ),
@@ -74,34 +76,26 @@ class _SearchScreenState extends State<SearchScreen> {
                           if (state.loading)
                             SpinKitSpinningLines(
                                 color: Colors.red.shade700, size: 100),
-                          Column(
-                            children: [
-                              SizedBox(height: 20.h,),
-                              Text(
-                                'Результаты поиска:',
-                                style: AppTextStyles.normalW600S14,
+                          if (state.video.name != '' && !state.loading)
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 10.w, vertical: 10.h),
+                              child: GestureDetector(
+                                child: VideoRecordingContainer(
+                                    entity: state.video),
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          VideoDetailsScreen(
+                                        entity: state.video,
+                                      ),
+                                    ),
+                                  );
+                                },
                               ),
-                              if (state.video.name != '' && !state.loading)
-                                Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
-                                  child: GestureDetector(
-                                    child: VideoRecordingContainer(
-                                        entity: state.video),
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (BuildContext context) =>
-                                              VideoDetailsScreen(
-                                            entity: state.video,
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                )
-                            ],
-                          )
+                            )
                         ],
                       ),
                     ),
