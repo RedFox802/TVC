@@ -1,16 +1,18 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tv/features/login_page/domain/state/login_state.dart';
 
+import '../auth/firebase_auth_service.dart';
 import '../data/login_data_storage.dart';
 import 'entity/login_entity.dart';
 
 class LoginCubit extends Cubit<LoginState> {
-  final LoginDataStorage _loginDataStorage = LoginDataStorage();
-
   LoginCubit()
       : super(
           const LoginState(),
         );
+
+  final LoginDataStorage _loginDataStorage = LoginDataStorage();
+  final FirebaseAuthService _authService = FirebaseAuthService();
 
   Future<void> loadLoginData() async {
     try {
@@ -23,7 +25,7 @@ class LoginCubit extends Cubit<LoginState> {
           login: data[2],
           password: data[3],
         );
-        emit(state.copyWith(loginEntity: currentEntity,loading: false));
+        emit(state.copyWith(loginEntity: currentEntity, loading: false));
       }
     } catch (e) {
       emit(state.copyWith(error: true));
@@ -37,6 +39,20 @@ class LoginCubit extends Cubit<LoginState> {
       await _loginDataStorage.saveData(data: data);
     } catch (e) {
       emit(state.copyWith(error: true));
+    }
+  }
+
+  Future<void> loginIn(String email, String password) async {
+    try {
+      emit(state.copyWith(loading: true));
+      bool isAuth = await _authService.loginIn(email, password);
+      if (isAuth) {
+        emit(state.copyWith(loading: false, connect: true));
+      } else {
+        emit(state.copyWith(error: true,loading: false));
+      }
+    } catch (e) {
+      emit(state.copyWith(error: true,loading: false));
     }
   }
 }

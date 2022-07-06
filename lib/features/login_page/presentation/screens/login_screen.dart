@@ -41,6 +41,17 @@ class _LoginScreenState extends State<LoginScreen> {
                   'Произошла ошибка! Попробуйте повторно подключиться к базе данных!',
                   context);
             }
+            if (state.connect) {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return const HelpScreen();
+                  },
+                ),
+                (route) => true,
+              );
+            }
           },
           builder: (BuildContext context, state) {
             _serverController =
@@ -130,23 +141,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                 _databaseController.text.isNotEmpty &&
                                 _loginController.text.isNotEmpty &&
                                 _passwordController.text.isNotEmpty) {
-                              await context
-                                  .read<LoginCubit>()
-                                  .saveLoginData(
+                              await context.read<LoginCubit>().saveLoginData(
                                   _serverController.text,
                                   _databaseController.text,
                                   _loginController.text,
                                   _passwordController.text);
 
-                              Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (BuildContext context) {
-                                    return HelpScreen();
-                                  },
-                                ),
-                                    (route) => true,
-                              );
+                              await context.read<LoginCubit>().loginIn(
+                                  _loginController.text,
+                                  _passwordController.text);
                             } else {
                               AppError.showError(
                                   'Необходимо заполнить все текстовые поля!',
