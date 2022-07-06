@@ -37,70 +37,66 @@ class _SearchScreenState extends State<SearchScreen> {
           }
         },
         builder: (BuildContext context, state) {
-          return Dismissible(
-            onDismissed: (DismissDirection dismissDirection) {
-              Navigator.maybePop(context);
-            },
-            key: UniqueKey(),
-            child: Scaffold(
-              backgroundColor: Colors.blueGrey.shade50,
-              body: SafeArea(
-                child: Column(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.symmetric(
-                          vertical: 16.h, horizontal: 10.w),
-                      height: MediaQuery.of(context).size.height / 8,
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                        color: Colors.red.shade700,
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(20.r),
-                          bottomRight: Radius.circular(20.r),
-                        ),
-                      ),
-                      child: AppSearchTextField(
-                        readOnly: false,
-                        textEditingController: controller,
-                        onChanged: (String str) {},
-                        onComplete: () {
-                          context
-                              .read<SearchCubit>()
-                              .searchVideoRecording(controller.text);
-                        },
+          return Scaffold(
+            backgroundColor: Colors.white,
+            body: SafeArea(
+              child: Column(
+                children: [
+                  Container(
+                    padding:
+                        EdgeInsets.symmetric(vertical: 16.h, horizontal: 10.w),
+                    height: MediaQuery.of(context).size.height / 8,
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      color: Colors.red.shade700,
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(20.r),
+                        bottomRight: Radius.circular(20.r),
                       ),
                     ),
-                    Expanded(
-                      child: Stack(
-                        children: [
-                          if (state.loading)
-                            SpinKitSpinningLines(
-                                color: Colors.red.shade700, size: 100),
-                          if (state.video.name != '' && !state.loading)
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 10.w, vertical: 10.h),
-                              child: GestureDetector(
-                                child: VideoRecordingContainer(
-                                    entity: state.video),
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (BuildContext context) =>
-                                          VideoDetailsScreen(
-                                        entity: state.video,
-                                      ),
+                    child: AppSearchTextField(
+                      readOnly: false,
+                      textEditingController: controller,
+                      onChanged: (String str) {},
+                      onComplete: () {
+                        context
+                            .read<SearchCubit>()
+                            .searchVideoRecording(controller.text);
+                      },
+                    ),
+                  ),
+                  Expanded(
+                    child: Stack(
+                      children: [
+                        if (state.loading)
+                          SpinKitSpinningLines(
+                              color: Colors.red.shade700, size: 100),
+                        if (state.video.name != '' && !state.loading)
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 10.w, vertical: 30.h),
+                            child: Dismissible(
+                              direction: DismissDirection.endToStart,
+                              key: UniqueKey(),
+                              onDismissed: (DismissDirection direction) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        VideoDetailsScreen(
+                                      entity: state.video,
                                     ),
-                                  );
-                                },
-                              ),
-                            )
-                        ],
-                      ),
+                                  ),
+                                );
+                              },
+                              child:
+                                  VideoRecordingContainer(entity: state.video),
+                            ),
+                          )
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           );

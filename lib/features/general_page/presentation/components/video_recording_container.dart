@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../components/app_text_style.dart';
+import '../../../video_details_page/presentation/screens/video_details_screen.dart';
 import '../../domain/entity/video_recording/video_recording_entity.dart';
 
 class VideoRecordingContainer extends StatelessWidget {
@@ -19,6 +20,16 @@ class VideoRecordingContainer extends StatelessWidget {
         vertical: 4.h,
       ),
       child: GestureDetector(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (BuildContext context) => VideoDetailsScreen(
+                entity: entity,
+              ),
+            ),
+          );
+        },
         child: Container(
           height: 260.h,
           decoration: BoxDecoration(
@@ -55,42 +66,50 @@ class VideoRecordingContainer extends StatelessWidget {
                       children: [
                         Text(
                           'Тип видеозаписи:',
-                          style: AppTextStyles.normalW600S12.copyWith(color: Colors.grey.shade800),
+                          style: AppTextStyles.normalW600S12
+                              .copyWith(color: Colors.grey.shade800),
                         ),
                         SizedBox(height: 6.h),
                         Text(
                           'Редакция:',
-                          style: AppTextStyles.normalW600S12.copyWith(color: Colors.grey.shade800),
+                          style: AppTextStyles.normalW600S12
+                              .copyWith(color: Colors.grey.shade800),
                         ),
                         SizedBox(height: 6.h),
                         Text(
                           'Редакц. статус:',
-                          style: AppTextStyles.normalW600S12.copyWith(color: Colors.grey.shade800),
+                          style: AppTextStyles.normalW600S12
+                              .copyWith(color: Colors.grey.shade800),
                         ),
                         SizedBox(height: 6.h),
                         Text(
                           'Статус ОТК:',
-                          style: AppTextStyles.normalW600S12.copyWith(color: Colors.grey.shade800),
+                          style: AppTextStyles.normalW600S12
+                              .copyWith(color: Colors.grey.shade800),
                         ),
                         SizedBox(height: 6.h),
                         Text(
                           'Статус титров:',
-                          style: AppTextStyles.normalW600S12.copyWith(color: Colors.grey.shade800),
+                          style: AppTextStyles.normalW600S12
+                              .copyWith(color: Colors.grey.shade800),
                         ),
                         SizedBox(height: 6.h),
                         Text(
                           'Статус комерции:',
-                          style: AppTextStyles.normalW600S12.copyWith(color: Colors.grey.shade800),
+                          style: AppTextStyles.normalW600S12
+                              .copyWith(color: Colors.grey.shade800),
                         ),
                         SizedBox(height: 6.h),
                         Text(
                           'Статус оцифровки:',
-                          style: AppTextStyles.normalW600S12.copyWith(color: Colors.grey.shade800),
+                          style: AppTextStyles.normalW600S12
+                              .copyWith(color: Colors.grey.shade800),
                         ),
                         SizedBox(height: 6.h),
                         Text(
                           'Статус субтитров:',
-                          style: AppTextStyles.normalW600S12.copyWith(color: Colors.grey.shade800),
+                          style: AppTextStyles.normalW600S12
+                              .copyWith(color: Colors.grey.shade800),
                         ),
                       ],
                     ),
