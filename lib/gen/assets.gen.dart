@@ -16,8 +16,24 @@ class $AssetsImagesGen {
   AssetGenImage get imBigLogo =>
       const AssetGenImage('assets/images/im_big_logo.png');
 
+  /// File path: assets/images/im_filters.gif
+  AssetGenImage get imFilters =>
+      const AssetGenImage('assets/images/im_filters.gif');
+
   /// File path: assets/images/im_logo.webp
   AssetGenImage get imLogo => const AssetGenImage('assets/images/im_logo.webp');
+
+  /// File path: assets/images/im_sorts.gif
+  AssetGenImage get imSorts =>
+      const AssetGenImage('assets/images/im_sorts.gif');
+
+  /// File path: assets/images/im_swipe.gif
+  AssetGenImage get imSwipe =>
+      const AssetGenImage('assets/images/im_swipe.gif');
+
+  /// File path: assets/images/im_video.png
+  AssetGenImage get imVideo =>
+      const AssetGenImage('assets/images/im_video.png');
 }
 
 class Assets {

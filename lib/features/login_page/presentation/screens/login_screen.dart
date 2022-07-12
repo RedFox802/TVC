@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:tv/components/app_errors_handler.dart';
+import 'package:tv/features/general_page/presentation/screens/general_screen.dart';
 import 'package:tv/features/help_page/presentation/screens/help_screen.dart';
 
 import '../../../../components/app_text_button.dart';
@@ -46,7 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 context,
                 MaterialPageRoute(
                   builder: (BuildContext context) {
-                    return const HelpScreen();
+                    return  state.loginEntity.login=='' ? const HelpScreen() : const GeneralScreen();
                   },
                 ),
                 (route) => true,

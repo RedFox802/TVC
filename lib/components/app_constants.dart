@@ -4,7 +4,6 @@ abstract class AppConstants {
 
   static const List<String> allFields = [
     'Название',
-    'Дата регистрации',
     'Тип видеозаписи',
     'Редакция',
     'Статус ОТК',

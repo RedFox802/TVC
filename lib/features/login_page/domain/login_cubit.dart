@@ -47,7 +47,7 @@ class LoginCubit extends Cubit<LoginState> {
       emit(state.copyWith(loading: true));
       bool isAuth = await _authService.loginIn(email, password);
       if (isAuth) {
-        emit(state.copyWith(loading: false, connect: true));
+        emit(state.copyWith(loading: false, connect: true,error: false));
       } else {
         emit(state.copyWith(error: true,loading: false));
       }

@@ -38,41 +38,44 @@ class _AppDropFieldState extends State<AppDropField> {
           ),
         ),
         SizedBox(height: 10.h),
-        DropdownButtonFormField2(
-          onSaved: widget.onChanged,
-          onChanged: widget.onChanged,
-          isExpanded: true,
-          iconSize: 30.h,
-          buttonHeight: 50.h,
-          buttonPadding: EdgeInsets.symmetric(horizontal: 14.w),
-          dropdownDecoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16.r),
-          ),
-          decoration: InputDecoration(
-            isDense: true,
-            border: OutlineInputBorder(
+        SizedBox(
+          height: 50.h,
+          child: DropdownButtonFormField2(
+            onSaved: widget.onChanged,
+            onChanged: widget.onChanged,
+            isExpanded: true,
+            iconSize: 30.h,
+            buttonHeight: 50.h,
+            buttonPadding: EdgeInsets.symmetric(horizontal: 14.w),
+            dropdownDecoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16.r),
             ),
-          ),
-          hint: Text(
-            'Все',
-            style: AppTextStyles.normalW400S14,
-          ),
-          icon: const Icon(
-            Icons.arrow_drop_down,
-            color: Colors.black45,
-          ),
-          items: widget.itemsList
-              .map(
-                (item) => DropdownMenuItem<String>(
-                  value: item,
-                  child: Text(
-                    item,
-                    style: AppTextStyles.normalW600S14,
+            decoration: InputDecoration(
+              isDense: true,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(16.r),
+              ),
+            ),
+            hint: Text(
+              'Все',
+              style: AppTextStyles.normalW400S14,
+            ),
+            icon: const Icon(
+              Icons.arrow_drop_down,
+              color: Colors.black45,
+            ),
+            items: widget.itemsList
+                .map(
+                  (item) => DropdownMenuItem<String>(
+                    value: item,
+                    child: Text(
+                      item,
+                      style: AppTextStyles.normalW600S14,
+                    ),
                   ),
-                ),
-              )
-              .toList(),
+                )
+                .toList(),
+          ),
         ),
         SizedBox(height: 10.h),
       ],
