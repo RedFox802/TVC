@@ -40,6 +40,10 @@ class _LoginScreenState extends State<LoginScreen> {
             if(widget.isErrorScreen ){
               context.read<LoginCubit>().emitError();
             }
+            else{
+              context.read<LoginCubit>().loginCheck();
+            }
+
             if (state.error) {
               AppError.showError(
                   'Произошла ошибка! Попробуйте повторно подключиться к базе данных!',

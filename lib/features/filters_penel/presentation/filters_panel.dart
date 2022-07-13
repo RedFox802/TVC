@@ -23,7 +23,6 @@ class FiltersPanel extends StatefulWidget {
 }
 
 class _FiltersPanelState extends State<FiltersPanel> {
-  final _formKey = GlobalKey<FormState>();
   String type = '';
   String editing = '';
   String editingState = '';
@@ -38,17 +37,15 @@ class _FiltersPanelState extends State<FiltersPanel> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return BlocBuilder<VideoListCubit, VideoListState>(
-        builder: (BuildContext context, state) {
-      return SlidingUpPanelWidget(
-        onTap: () {},
-        panelStatus: SlidingUpPanelStatus.hidden,
-        panelController: widget.controller,
-        controlHeight: size.height,
-        child: Container(
-          width: size.width * 0.76.w,
-          color: Colors.white,
-          child: Form(
-            key: _formKey,
+      builder: (BuildContext context, state) {
+        return SlidingUpPanelWidget(
+          onTap: () {},
+          panelStatus: SlidingUpPanelStatus.hidden,
+          panelController: widget.controller,
+          controlHeight: size.height,
+          child: Container(
+            width: size.width * 0.76.w,
+            color: Colors.white,
             child: Column(
               children: [
                 Container(
@@ -168,8 +165,8 @@ class _FiltersPanelState extends State<FiltersPanel> {
               ],
             ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 }

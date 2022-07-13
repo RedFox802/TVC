@@ -11,4 +11,8 @@ class FirebaseAuthService {
       return false;
     }
   }
+
+  bool isLoginIn(){
+    return _auth.currentUser==null ? false : true;
+  }
 }

@@ -35,7 +35,6 @@ class _AppDropFieldState extends State<AppDropField> {
             isExpanded: true,
             iconSize: 30.h,
             buttonHeight: 30.h,
-            //buttonPadding: EdgeInsets.symmetric(horizontal: 14.w),
             dropdownDecoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16.r),
             ),

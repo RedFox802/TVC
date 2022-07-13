@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tv/features/login_page/domain/state/login_state.dart';
 
@@ -60,4 +62,17 @@ class LoginCubit extends Cubit<LoginState> {
       emit(state.copyWith(error: true,loading: false));
     }
   }
+
+  void loginCheck(){
+    try{
+      if( _authService.isLoginIn()){
+        log('вот эмит');
+        emit(state.copyWith(connect: true));
+      }
+    }
+    catch (e) {
+      emit(state.copyWith(error: true,loading: false));
+    }
+  }
+
 }
