@@ -8,12 +8,14 @@ class AppDropField extends StatefulWidget {
   final List<String> itemsList;
   final void Function(String?) onChanged;
   final String description;
+  final bool first;
 
   const AppDropField({
     Key? key,
     required this.itemsList,
     required this.description,
     required this.onChanged,
+    this.first = false,
   }) : super(key: key);
 
   @override
@@ -24,55 +26,47 @@ class _AppDropFieldState extends State<AppDropField> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Divider(),
-        Padding(
-          padding: EdgeInsets.only(left: 10.w),
-          child: Text(
-            widget.description,
-            style: AppTextStyles.normalW500S14,
-          ),
-        ),
-        SizedBox(height: 10.h),
-        DropdownButtonFormField2(
-          onSaved: widget.onChanged,
-          onChanged: widget.onChanged,
-          isExpanded: true,
-          iconSize: 30.h,
-          buttonHeight: 50.h,
-          buttonPadding: EdgeInsets.symmetric(horizontal: 14.w),
-          dropdownDecoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16.r),
-          ),
-          decoration: InputDecoration(
-            isDense: true,
-            contentPadding: EdgeInsets.zero,
-            border: OutlineInputBorder(
+        SizedBox(
+          height: 46.h,
+          child: DropdownButtonFormField2(
+            onSaved: widget.onChanged,
+            onChanged: widget.onChanged,
+            isExpanded: true,
+            iconSize: 30.h,
+            buttonHeight: 30.h,
+            dropdownDecoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16.r),
             ),
-          ),
-          hint: Text(
-            'Все',
-            style: AppTextStyles.normalW400S14,
-          ),
-          icon: const Icon(
-            Icons.arrow_drop_down,
-            color: Colors.black45,
-          ),
-          items: widget.itemsList
-              .map(
-                (item) => DropdownMenuItem<String>(
-                  value: item,
-                  child: Text(
-                    item,
-                    style: AppTextStyles.normalW600S14,
+            decoration: InputDecoration(
+              label: Text(widget.description,style: AppTextStyles.normalW600S14,),
+              isDense: true,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(16.r),
+              ),
+            ),
+            hint: Text(
+              'Все',
+              style: AppTextStyles.normal400S12,
+            ),
+            icon: const Icon(
+              Icons.arrow_drop_down,
+              color: Colors.black45,
+            ),
+            items: widget.itemsList
+                .map(
+                  (item) => DropdownMenuItem<String>(
+                    value: item,
+                    child: Text(
+                      item,
+                      style: AppTextStyles.normal400S12,
+                    ),
                   ),
-                ),
-              )
-              .toList(),
+                )
+                .toList(),
+          ),
         ),
-        SizedBox(height: 10.h),
+        SizedBox(height:16.h),
       ],
     );
   }

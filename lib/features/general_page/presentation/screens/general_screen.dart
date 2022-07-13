@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,6 +11,7 @@ import 'package:tv/features/general_page/presentation/components/video_recording
 import '../../../filters_penel/presentation/filters_panel.dart';
 import '../../../login_page/presentation/screens/login_screen.dart';
 import '../../../video_details_page/presentation/screens/video_details_screen.dart';
+import '../components/app_button_container.dart';
 
 class GeneralScreen extends StatefulWidget {
   const GeneralScreen({Key? key}) : super(key: key);
@@ -23,11 +22,14 @@ class GeneralScreen extends StatefulWidget {
 
 class _GeneralScreenState extends State<GeneralScreen> {
   final SlidingUpPanelController _panelController = SlidingUpPanelController();
+  String selectedItem = '';
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+
     return Scaffold(
-      backgroundColor: Colors.grey.shade500,
+      backgroundColor: Colors.grey.shade50,
       body: BlocProvider<VideoListCubit>(
         create: (BuildContext context) => VideoListCubit()..getVideoList(),
         child: BlocConsumer<VideoListCubit, VideoListState>(
@@ -39,7 +41,7 @@ class _GeneralScreenState extends State<GeneralScreen> {
                     isErrorScreen: true,
                   );
                 },
-              ), (route) => true);
+              ), (route) => false);
             }
           },
           builder: (BuildContext context, state) {
@@ -53,44 +55,33 @@ class _GeneralScreenState extends State<GeneralScreen> {
                     child: Column(
                       children: [
                         Container(
-                          height: MediaQuery.of(context).size.height / 8,
-                          width: MediaQuery.of(context).size.width,
+                          height: 80.h,
+                          width: width,
                           decoration: BoxDecoration(
-                            color: Colors.grey.shade400,
+                            color: Colors.red.shade700,
                             borderRadius: BorderRadius.only(
                               bottomLeft: Radius.circular(20.r),
                               bottomRight: Radius.circular(20.r),
                             ),
                           ),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               AppSearchTextField(
-                                width: MediaQuery.of(context).size.width * 0.75,
+                                width: width * 0.75,
                               ),
-                              Container(
-                                width: 50.w,
-                                height: 50.w,
-                                decoration: BoxDecoration(
-                                  color: Colors.grey.shade300,
-                                  border: Border.all(color: Colors.white),
-                                  borderRadius: BorderRadius.circular(16.r),
-                                ),
-                                child: IconButton(
-                                  icon: const Icon(Icons.filter_alt),
-                                  onPressed: () {
-                                    log('${_panelController.status}');
-                                    if (_panelController.status ==
-                                            SlidingUpPanelStatus.expanded ||
-                                        _panelController.status ==
-                                            SlidingUpPanelStatus.collapsed) {
-                                      _panelController.hide();
-                                    } else {
-                                      _panelController.expand();
-                                    }
-                                    log('${_panelController.status}');
-                                  },
-                                ),
+                              AppButtonContainer(
+                                icon: Icons.filter_alt,
+                                onPressed: () {
+                                  if (_panelController.status ==
+                                          SlidingUpPanelStatus.expanded ||
+                                      _panelController.status ==
+                                          SlidingUpPanelStatus.collapsed) {
+                                    _panelController.hide();
+                                  } else {
+                                    _panelController.expand();
+                                  }
+                                },
                               ),
                             ],
                           ),
@@ -99,9 +90,10 @@ class _GeneralScreenState extends State<GeneralScreen> {
                           child: ListView.builder(
                             itemCount: state.videos.length,
                             padding: EdgeInsets.symmetric(
-                                horizontal: 16.w, vertical: 10.h),
+                                horizontal: 12.w, vertical: 10.h),
                             itemBuilder: (BuildContext context, int index) {
                               return Dismissible(
+                                direction: DismissDirection.endToStart,
                                 key: UniqueKey(),
                                 onDismissed: (DismissDirection direction) {
                                   Navigator.push(
@@ -114,7 +106,9 @@ class _GeneralScreenState extends State<GeneralScreen> {
                                     ),
                                   );
                                 },
-                                child: const VideoRecordingContainer(),
+                                child: VideoRecordingContainer(
+                                  entity: state.videos[index],
+                                ),
                               );
                             },
                           ),

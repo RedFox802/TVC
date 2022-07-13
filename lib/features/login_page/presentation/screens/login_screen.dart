@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:tv/components/app_errors_handler.dart';
+import 'package:tv/features/general_page/presentation/screens/general_screen.dart';
 import 'package:tv/features/help_page/presentation/screens/help_screen.dart';
 
 import '../../../../components/app_text_button.dart';
@@ -36,10 +37,28 @@ class _LoginScreenState extends State<LoginScreen> {
         create: (BuildContext context) => LoginCubit()..loadLoginData(),
         child: BlocConsumer<LoginCubit, LoginState>(
           listener: (BuildContext context, LoginState state) {
-            if (widget.isErrorScreen || state.error) {
+            if(widget.isErrorScreen ){
+              context.read<LoginCubit>().emitError();
+            }
+            else{
+              context.read<LoginCubit>().loginCheck();
+            }
+
+            if (state.error) {
               AppError.showError(
                   'Произошла ошибка! Попробуйте повторно подключиться к базе данных!',
                   context);
+            }
+            if (state.connect) {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return  state.loginEntity.login=='' ? const HelpScreen() : const GeneralScreen();
+                  },
+                ),
+                (route) => false,
+              );
             }
           },
           builder: (BuildContext context, state) {
@@ -130,23 +149,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                 _databaseController.text.isNotEmpty &&
                                 _loginController.text.isNotEmpty &&
                                 _passwordController.text.isNotEmpty) {
-                              await context
-                                  .read<LoginCubit>()
-                                  .saveLoginData(
+                              await context.read<LoginCubit>().saveLoginData(
                                   _serverController.text,
                                   _databaseController.text,
                                   _loginController.text,
                                   _passwordController.text);
 
-                              Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (BuildContext context) {
-                                    return HelpScreen();
-                                  },
-                                ),
-                                    (route) => true,
-                              );
+                              await context.read<LoginCubit>().loginIn(
+                                  _loginController.text,
+                                  _passwordController.text);
                             } else {
                               AppError.showError(
                                   'Необходимо заполнить все текстовые поля!',

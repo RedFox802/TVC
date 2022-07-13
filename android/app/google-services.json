@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "249188205145",
+    "project_id": "tv-center-bc924",
+    "storage_bucket": "tv-center-bc924.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:249188205145:android:5de4ab90e587e939506748",
+        "android_client_info": {
+          "package_name": "com.example.tv"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "249188205145-mk6sno244ge88vfdocgns0t64b3b8oci.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tv",
+            "certificate_hash": "3a096605d8ed30a3550f22c88d291b38684ed04d"
+          }
+        },
+        {
+          "client_id": "249188205145-7hrk3g0okog29bevi78vo1nr97b44har.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVmpEHu1V8cR1S5uYdf2Ca8zr2G2iYkQM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "249188205145-7hrk3g0okog29bevi78vo1nr97b44har.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

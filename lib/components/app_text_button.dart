@@ -6,21 +6,28 @@ import 'app_text_style.dart';
 class AppRedTextButton extends StatelessWidget {
   final String text;
   final void Function() onPressed;
-  final double indent;
+  final double horizontalIndent;
+  final double verticalIndent;
+  final double height;
 
   const AppRedTextButton({
     Key? key,
     required this.text,
     required this.onPressed,
-    this.indent = 20,
+    this.horizontalIndent = 20,
+    this.verticalIndent = 40,
+    this.height = 50,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(bottom: 40.h, right: indent.w, left: indent.w),
+      padding: EdgeInsets.only(
+          bottom: verticalIndent.h,
+          right: horizontalIndent.w,
+          left: horizontalIndent.w),
       child: SizedBox(
-        height: 50.h,
+        height: height.h,
         width: MediaQuery.of(context).size.width,
         child: ElevatedButton(
           onPressed: onPressed,

@@ -8,6 +8,12 @@ class AppTextStyles {
     color: Colors.grey.shade800,
   );
 
+  static final TextStyle normalW500S20 = TextStyle(
+    fontSize: 20.sp,
+    fontWeight: FontWeight.w500,
+    color: Colors.white,
+  );
+
   static final TextStyle normalW600S14 = TextStyle(
     fontSize: 14.sp,
     fontWeight: FontWeight.w600,
@@ -18,6 +24,12 @@ class AppTextStyles {
     fontSize: 12.sp,
     fontWeight: FontWeight.w600,
     color: Colors.grey.shade700,
+  );
+
+  static final TextStyle normal400S12 = TextStyle(
+    fontSize: 12.sp,
+    fontWeight: FontWeight.w400,
+    color: Colors.grey.shade900,
   );
 
   static final TextStyle normalW400S14 = TextStyle(

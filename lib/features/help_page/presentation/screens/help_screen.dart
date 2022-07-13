@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_onboarding_slider/flutter_onboarding_slider.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tv/components/app_text_style.dart';
 import 'package:tv/features/general_page/presentation/screens/general_screen.dart';
 import 'package:tv/features/help_page/presentation/components/slider_item.dart';
@@ -13,22 +14,22 @@ class HelpScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: OnBoardingSlider(
-        totalPage: 6,
+        totalPage: 4,
         speed: 1,
         headerBackgroundColor: Colors.grey.shade200,
+        pageBackgroundColor: Colors.blueGrey.shade50,
         finishButtonText: 'Перейти к базе данных',
         finishButtonColor: Colors.red.shade800,
-        finishButtonTextStyle:
-            AppTextStyles.normalW600S14.copyWith(color: Colors.white),
+        finishButtonTextStyle: AppTextStyles.normalW600S14.copyWith(color: Colors.white),
         onFinish: () {
           Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(
               builder: (BuildContext context) {
-                return GeneralScreen();
+                return const GeneralScreen();
               },
             ),
-            (route) => true,
+            (route) => false,
           );
         },
         skipTextButton: Text(
@@ -36,29 +37,37 @@ class HelpScreen extends StatelessWidget {
           style: AppTextStyles.normalW700S16,
         ),
         background: [
-          SizedBox(
-            height: MediaQuery.of(context).size.height / 2,
-            child: Assets.images.imLogo.image(),
+          Padding(
+            padding: EdgeInsets.only(top: 10.h),
+            child: SizedBox(
+              height: MediaQuery.of(context).size.height / 2,
+              width: MediaQuery.of(context).size.width,
+              child: Assets.images.imVideo.image(),
+            ),
           ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height / 2,
-            child: Assets.images.imLogo.image(),
+          Padding(
+            padding: EdgeInsets.only(top: 10.h),
+            child: SizedBox(
+              height: MediaQuery.of(context).size.height / 2,
+              width: MediaQuery.of(context).size.width,
+              child: Assets.images.imSwipe.image(),
+            ),
           ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height / 2,
-            child: Assets.images.imLogo.image(),
+          Padding(
+            padding: EdgeInsets.only(top: 10.h),
+            child: SizedBox(
+              height: MediaQuery.of(context).size.height / 2,
+              width: MediaQuery.of(context).size.width,
+              child: Assets.images.imFilters.image(),
+            ),
           ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height / 2,
-            child: Assets.images.imLogo.image(),
-          ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height / 2,
-            child: Assets.images.imLogo.image(),
-          ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height / 2,
-            child: Assets.images.imLogo.image(),
+          Padding(
+            padding: EdgeInsets.only(top: 10.h,),
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height / 2,
+              child: Center(child: Assets.images.imLogo.image()),
+            ),
           ),
         ],
         pageBodies: const [
@@ -72,19 +81,9 @@ class HelpScreen extends StatelessWidget {
                 'Чтобы открыть таблицу достаточно нажать на нужную видеозапись или использовать свайп влево',
           ),
           SliderItem(
-            title: 'Возвращение к главному экрану',
+            title: 'Фильтры и сортировка',
             subTitle:
-                'С помощью спайпа вправо можно закрыть страницу с подробной информацией',
-          ),
-          SliderItem(
-            title: 'Сортировка',
-            subTitle:
-                'Вы можете сортировать данные по возрастанию и убыванию с помощью данной кнопки',
-          ),
-          SliderItem(
-            title: 'Фильтры',
-            subTitle:
-                'Для отбора данных, найдите нужный фильтр и выберите нужное значение из предложенных',
+                'Для отбора данных, найдите нужный фильтр и выберите значение из предложенных',
           ),
           SliderItem(
             title: 'Приступить к работе',
