@@ -14,6 +14,11 @@ class LoginCubit extends Cubit<LoginState> {
   final LoginDataStorage _loginDataStorage = LoginDataStorage();
   final FirebaseAuthService _authService = FirebaseAuthService();
 
+  void emitError(){
+    emit(state.copyWith(error: true));
+  }
+
+
   Future<void> loadLoginData() async {
     try {
       emit(state.copyWith(loading: true));

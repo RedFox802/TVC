@@ -23,6 +23,7 @@ class FiltersPanel extends StatefulWidget {
 }
 
 class _FiltersPanelState extends State<FiltersPanel> {
+  final _formKey = GlobalKey<FormState>();
   String type = '';
   String editing = '';
   String editingState = '';
@@ -31,6 +32,7 @@ class _FiltersPanelState extends State<FiltersPanel> {
   String commerceState = '';
   String digitalizationState = '';
   String subtitlesState = '';
+  String sort = '';
 
   @override
   Widget build(BuildContext context) {
@@ -45,115 +47,126 @@ class _FiltersPanelState extends State<FiltersPanel> {
         child: Container(
           width: size.width * 0.76.w,
           color: Colors.white,
-          child: Column(
-            children: [
-              Container(
-                alignment: Alignment.center,
-                color: Colors.red.shade700,
-                height: size.height / 8,
-                width: size.width,
-                child: Text(
-                  'Отфильтровать видеозаписи',
-                  style: AppTextStyles.normalW600S14.copyWith(color: Colors.white),
-                  textAlign: TextAlign.center,
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                Container(
+                  alignment: Alignment.center,
+                  color: Colors.red.shade700,
+                  height: size.height / 8,
+                  width: size.width,
+                  child: Text(
+                    'Отфильтровать видеозаписи',
+                    style: AppTextStyles.normalW600S14
+                        .copyWith(color: Colors.white),
+                    textAlign: TextAlign.center,
+                  ),
                 ),
-              ),
-              SizedBox(height: 10.h),
-              Expanded(
-                child: ListView(
-                  padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 20.h),
-                  children: [
-                    AppDropField(
-                      description: "Тип видеозаписи",
-                      first: true,
-                      itemsList: AppConstants.videoTypes,
-                      onChanged: (String? item) {
-                        setState(() {
-                          type = item ?? '';
-                        });
-                      },
-                    ),
-                    AppDropField(
-                      description: "Редакция",
-                      itemsList: AppConstants.editions,
-                      onChanged: (String? item) {
-                        setState(() {
-                          editing = item ?? '';
-                        });
-                      },
-                    ),
-                    AppDropField(
-                      description: "Статус ОТК",
-                      itemsList: AppConstants.statuses,
-                      onChanged: (String? item) {
-                        setState(() {
-                          otpState = item ?? '';
-                        });
-                      },
-                    ),
-                    AppDropField(
-                      description: "Статус титров",
-                      itemsList: AppConstants.statuses,
-                      onChanged: (String? item) {
-                        setState(() {
-                          creditsState = item ?? '';
-                        });
-                      },
-                    ),
-                    AppDropField(
-                      description: "Статус коммерции",
-                      itemsList: AppConstants.statuses,
-                      onChanged: (String? item) {
-                        setState(() {
-                          commerceState = item ?? '';
-                        });
-                      },
-                    ),
-                    AppDropField(
-                      description: "Статус оцифровки",
-                      itemsList: AppConstants.digitizationStatuses,
-                      onChanged: (String? item) {
-                        setState(() {
-                          digitalizationState = item ?? '';
-                        });
-                      },
-                    ),
-                    AppDropField(
-                      description: "Статус субтитров",
-                      itemsList: AppConstants.subtitlesStatuses,
-                      onChanged: (String? item) {
-                        setState(() {
-                          subtitlesState = item ?? '';
-                        });
-                      },
-                    ),
-                    SizedBox(height: 20.h),
-                    AppRedTextButton(
-                      text: "Применить фильтры",
-                      indent: 0,
-                      onPressed: () {
-                        Map<String, String> filters =
-                            AppConstants.createFiltersMap(
-                          type,
-                          editing,
-                          otpState,
-                          creditsState,
-                          commerceState,
-                          digitalizationState,
-                          subtitlesState,
-                        );
-
-                        widget.controller.hide();
-
-                        context
-                            .read<VideoListCubit>()
-                            .getFilteredVideoList(filters);
-                      },
-                    ),
-                  ],
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 14.w),
+                  child: Column(
+                    children: [
+                      SizedBox(height: 20.h),
+                      AppDropField(
+                        description: "Тип видеозаписи",
+                        first: true,
+                        itemsList: AppConstants.videoTypes,
+                        onChanged: (String? item) {
+                          setState(() {
+                            type = item ?? '';
+                          });
+                        },
+                      ),
+                      AppDropField(
+                        description: "Редакция",
+                        itemsList: AppConstants.editions,
+                        onChanged: (String? item) {
+                          setState(() {
+                            editing = item ?? '';
+                          });
+                        },
+                      ),
+                      AppDropField(
+                        description: "Статус ОТК",
+                        itemsList: AppConstants.statuses,
+                        onChanged: (String? item) {
+                          setState(() {
+                            otpState = item ?? '';
+                          });
+                        },
+                      ),
+                      AppDropField(
+                        description: "Статус титров",
+                        itemsList: AppConstants.statuses,
+                        onChanged: (String? item) {
+                          setState(() {
+                            creditsState = item ?? '';
+                          });
+                        },
+                      ),
+                      AppDropField(
+                        description: "Статус коммерции",
+                        itemsList: AppConstants.statuses,
+                        onChanged: (String? item) {
+                          setState(() {
+                            commerceState = item ?? '';
+                          });
+                        },
+                      ),
+                      AppDropField(
+                        description: "Статус оцифровки",
+                        itemsList: AppConstants.digitizationStatuses,
+                        onChanged: (String? item) {
+                          setState(() {
+                            digitalizationState = item ?? '';
+                          });
+                        },
+                      ),
+                      AppDropField(
+                        description: "Статус субтитров",
+                        itemsList: AppConstants.subtitlesStatuses,
+                        onChanged: (String? item) {
+                          setState(() {
+                            subtitlesState = item ?? '';
+                          });
+                        },
+                      ),
+                      AppDropField(
+                        description: "Выберите поле для сортировки",
+                        itemsList: AppConstants.allFields,
+                        onChanged: (String? item) {
+                          setState(() {
+                            sort = item ?? '';
+                          });
+                        },
+                      ),
+                      AppRedTextButton(
+                        height: 36.h,
+                        text: "Применить фильтры",
+                        horizontalIndent: 10,
+                        verticalIndent: 0,
+                        onPressed: () {
+                          widget.controller.hide();
+                          Map<String, String> filters =
+                              AppConstants.createFiltersMap(
+                            type,
+                            editing,
+                            otpState,
+                            creditsState,
+                            commerceState,
+                            digitalizationState,
+                            subtitlesState,
+                          );
+                          context.read<VideoListCubit>().getFilteredVideoList(
+                              filters, sort == '-' ? '' : sort);
+                        },
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       );

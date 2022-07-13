@@ -26,31 +26,21 @@ class _AppDropFieldState extends State<AppDropField> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if(!widget.first)
-          const Divider(),
-        Padding(
-          padding: EdgeInsets.only(left: 10.w),
-          child: Text(
-            widget.description,
-            style: AppTextStyles.normalW500S14,
-          ),
-        ),
-        SizedBox(height: 10.h),
         SizedBox(
-          height: 50.h,
+          height: 46.h,
           child: DropdownButtonFormField2(
             onSaved: widget.onChanged,
             onChanged: widget.onChanged,
             isExpanded: true,
             iconSize: 30.h,
-            buttonHeight: 50.h,
-            buttonPadding: EdgeInsets.symmetric(horizontal: 14.w),
+            buttonHeight: 30.h,
+            //buttonPadding: EdgeInsets.symmetric(horizontal: 14.w),
             dropdownDecoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16.r),
             ),
             decoration: InputDecoration(
+              label: Text(widget.description,style: AppTextStyles.normalW600S14,),
               isDense: true,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(16.r),
@@ -58,7 +48,7 @@ class _AppDropFieldState extends State<AppDropField> {
             ),
             hint: Text(
               'Все',
-              style: AppTextStyles.normalW400S14,
+              style: AppTextStyles.normal400S12,
             ),
             icon: const Icon(
               Icons.arrow_drop_down,
@@ -70,14 +60,14 @@ class _AppDropFieldState extends State<AppDropField> {
                     value: item,
                     child: Text(
                       item,
-                      style: AppTextStyles.normalW600S14,
+                      style: AppTextStyles.normal400S12,
                     ),
                   ),
                 )
                 .toList(),
           ),
         ),
-        SizedBox(height: 10.h),
+        SizedBox(height:16.h),
       ],
     );
   }

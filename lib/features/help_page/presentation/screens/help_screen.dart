@@ -29,7 +29,7 @@ class HelpScreen extends StatelessWidget {
                 return const GeneralScreen();
               },
             ),
-            (route) => true,
+            (route) => false,
           );
         },
         skipTextButton: Text(

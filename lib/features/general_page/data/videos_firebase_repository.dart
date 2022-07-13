@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:tv/features/general_page/domain/entity/video_recording/video_recording_entity.dart';
 
@@ -17,7 +15,7 @@ class VideosFirebaseRepository {
 
   Future<List<VideoRecordingEntity>> getFilteredSortedVideos(
     Map<String, String> filters,
-    List<String> sorts,
+    String sort,
   ) async {
     final videos = _fireStore.collection('videos');
     Query<Map<String, dynamic>> filteredVideos = videos;
@@ -36,35 +34,46 @@ class VideosFirebaseRepository {
         .map((json) => VideoRecordingEntity.fromJson(json))
         .toList();
 
-    if (sorts.isNotEmpty) {
-      for (var sort in sorts) {
-        log(sort);
-        switch (sort) {
-          case 'name':
-            result.sort((a, b) => a.name.compareTo(b.name));
-            break;
-          case 'type':
-            result.sort((a, b) => a.type.compareTo(b.type));
-            break;
-          case 'editingName':
-            result.sort((a, b) => a.editingName.compareTo(b.editingName));
-            break;
-          case 'otkStatus':
-            result.sort((a, b) => a.otkStatus.compareTo(b.otkStatus));
-            break;
-          case 'creditsStatus':
-            result.sort((a, b) => a.creditsStatus.compareTo(b.creditsStatus));
-            break;
-          case 'digitizationStatus':
-            result.sort((a, b) => a.digitizationStatus.compareTo(b.digitizationStatus));
-            break;
-          case 'subtitles':
-            result.sort((a, b) => a.subtitles.compareTo(b.subtitles));
-            break;
-          case 'commerceStatus':
-            result.sort((a, b) => a.commerceStatus.compareTo(b.commerceStatus));
-            break;
-        }
+    if (sort.isNotEmpty) {
+      switch (sort) {
+        case 'Название':
+          result.sort((a, b) => a.name.compareTo(b.name));
+          break;
+        case 'Дата регистрации':
+          result.sort((a, b) {
+            List<String> firstDateArr = a.registrationDate.split('.');
+            DateTime firstDate = DateTime(int.parse(firstDateArr[2]),
+                int.parse(firstDateArr[1]), int.parse(firstDateArr[0]));
+
+            List<String> secondDateArr = b.registrationDate.split('.');
+            DateTime secondDate = DateTime(int.parse(secondDateArr[2]),
+                int.parse(secondDateArr[1]), int.parse(secondDateArr[0]));
+
+            return firstDate.compareTo(secondDate);
+          });
+          break;
+        case 'Тип видеозаписи':
+          result.sort((a, b) => a.type.compareTo(b.type));
+          break;
+        case 'Редакция':
+          result.sort((a, b) => a.editingName.compareTo(b.editingName));
+          break;
+        case 'Статус ОТК':
+          result.sort((a, b) => a.otkStatus.compareTo(b.otkStatus));
+          break;
+        case 'Статус титров':
+          result.sort((a, b) => a.creditsStatus.compareTo(b.creditsStatus));
+          break;
+        case 'Статус оцифровки':
+          result.sort(
+              (a, b) => a.digitizationStatus.compareTo(b.digitizationStatus));
+          break;
+        case 'Статус субтитров':
+          result.sort((a, b) => a.subtitles.compareTo(b.subtitles));
+          break;
+        case 'Статус комерции':
+          result.sort((a, b) => a.commerceStatus.compareTo(b.commerceStatus));
+          break;
       }
     }
     return result;

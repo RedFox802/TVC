@@ -15,31 +15,21 @@ class VideoListCubit extends Cubit<VideoListState> {
       emit(state.copyWith(loading: true));
       List<VideoRecordingEntity> entities =
           await _videosFirebaseRepository.getAllVideos();
-      emit(state.copyWith(videos: entities, loading: false,error: false));
+      emit(state.copyWith(videos: entities, loading: false, error: false));
     } catch (e) {
-      emit(state.copyWith(error: true,loading: false));
+      emit(state.copyWith(error: true, loading: false));
     }
   }
 
-  Future<void> getSortedVideoList(List<String> sorts) async {
+  Future<void> getFilteredVideoList(
+      Map<String, String> filters, String sort) async {
     try {
       emit(state.copyWith(loading: true));
-      List<VideoRecordingEntity> entities =
-      await _videosFirebaseRepository.getFilteredSortedVideos(state.filters, sorts);
-      emit(state.copyWith(videos: entities,sorts: sorts, loading: false,error: false));
+      List<VideoRecordingEntity> entities = await _videosFirebaseRepository
+          .getFilteredSortedVideos(filters, sort);
+      emit(state.copyWith(videos: entities, loading: false, error: false));
     } catch (e) {
-      emit(state.copyWith(error: true,loading: false));
-    }
-  }
-
-  Future<void> getFilteredVideoList(Map<String,String> filters) async {
-    try {
-      emit(state.copyWith(loading: true));
-      List<VideoRecordingEntity> entities =
-      await _videosFirebaseRepository.getFilteredSortedVideos(filters, state.sorts);
-      emit(state.copyWith(videos: entities,filters: filters, loading: false,error: false));
-    } catch (e) {
-      emit(state.copyWith(error: true,loading: false));
+      emit(state.copyWith(error: true, loading: false));
     }
   }
 }

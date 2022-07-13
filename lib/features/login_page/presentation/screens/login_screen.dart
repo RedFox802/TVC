@@ -37,7 +37,10 @@ class _LoginScreenState extends State<LoginScreen> {
         create: (BuildContext context) => LoginCubit()..loadLoginData(),
         child: BlocConsumer<LoginCubit, LoginState>(
           listener: (BuildContext context, LoginState state) {
-            if (widget.isErrorScreen || state.error) {
+            if(widget.isErrorScreen ){
+              context.read<LoginCubit>().emitError();
+            }
+            if (state.error) {
               AppError.showError(
                   'Произошла ошибка! Попробуйте повторно подключиться к базе данных!',
                   context);
@@ -50,7 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     return  state.loginEntity.login=='' ? const HelpScreen() : const GeneralScreen();
                   },
                 ),
-                (route) => true,
+                (route) => false,
               );
             }
           },
