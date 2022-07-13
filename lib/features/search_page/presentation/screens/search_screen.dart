@@ -45,7 +45,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   Container(
                     padding:
                         EdgeInsets.symmetric(vertical: 16.h, horizontal: 10.w),
-                    height: MediaQuery.of(context).size.height / 8,
+                    height: 80.h,
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
                       color: Colors.red.shade700,
@@ -54,15 +54,17 @@ class _SearchScreenState extends State<SearchScreen> {
                         bottomRight: Radius.circular(20.r),
                       ),
                     ),
-                    child: AppSearchTextField(
-                      readOnly: false,
-                      textEditingController: controller,
-                      onChanged: (String str) {},
-                      onComplete: () {
-                        context
-                            .read<SearchCubit>()
-                            .searchVideoRecording(controller.text);
-                      },
+                    child: Center(
+                      child: AppSearchTextField(
+                        readOnly: false,
+                        textEditingController: controller,
+                        onChanged: (String str) {},
+                        onComplete: () {
+                          context
+                              .read<SearchCubit>()
+                              .searchVideoRecording(controller.text);
+                        },
+                      ),
                     ),
                   ),
                   Expanded(

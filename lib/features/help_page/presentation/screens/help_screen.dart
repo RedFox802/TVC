@@ -14,7 +14,7 @@ class HelpScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: OnBoardingSlider(
-        totalPage: 5,
+        totalPage: 4,
         speed: 1,
         headerBackgroundColor: Colors.grey.shade200,
         pageBackgroundColor: Colors.blueGrey.shade50,
@@ -58,22 +58,15 @@ class HelpScreen extends StatelessWidget {
             child: SizedBox(
               height: MediaQuery.of(context).size.height / 2,
               width: MediaQuery.of(context).size.width,
-              child: Assets.images.imSorts.image(),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: 10.h),
-            child: SizedBox(
-              height: MediaQuery.of(context).size.height / 2,
-              width: MediaQuery.of(context).size.width,
               child: Assets.images.imFilters.image(),
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(top: 10.h),
+            padding: EdgeInsets.only(top: 10.h,),
             child: SizedBox(
+              width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height / 2,
-              child: Assets.images.imLogo.image(),
+              child: Center(child: Assets.images.imLogo.image()),
             ),
           ),
         ],
@@ -88,12 +81,7 @@ class HelpScreen extends StatelessWidget {
                 'Чтобы открыть таблицу достаточно нажать на нужную видеозапись или использовать свайп влево',
           ),
           SliderItem(
-            title: 'Сортировка',
-            subTitle:
-                'Вы можете сортировать данные по любому параметру видеозаписи',
-          ),
-          SliderItem(
-            title: 'Фильтры',
+            title: 'Фильтры и сортировка',
             subTitle:
                 'Для отбора данных, найдите нужный фильтр и выберите значение из предложенных',
           ),

@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tv/components/app_text_style.dart';
@@ -18,7 +16,6 @@ class VideoDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    log(entity.broadcasts.length);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(

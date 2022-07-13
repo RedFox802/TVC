@@ -44,14 +44,14 @@ class _FiltersPanelState extends State<FiltersPanel> {
           panelController: widget.controller,
           controlHeight: size.height,
           child: Container(
-            width: size.width * 0.76.w,
+            width: size.width - 68.h,
             color: Colors.white,
             child: Column(
               children: [
                 Container(
                   alignment: Alignment.center,
                   color: Colors.red.shade700,
-                  height: size.height / 8,
+                  height: 80.h,
                   width: size.width,
                   child: Text(
                     'Отфильтровать видеозаписи',
@@ -60,9 +60,9 @@ class _FiltersPanelState extends State<FiltersPanel> {
                     textAlign: TextAlign.center,
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 14.w),
-                  child: Column(
+                Expanded(
+                  child: ListView(
+                    padding: EdgeInsets.symmetric(horizontal: 14.w),
                     children: [
                       SizedBox(height: 20.h),
                       AppDropField(
@@ -159,6 +159,7 @@ class _FiltersPanelState extends State<FiltersPanel> {
                               filters, sort == '-' ? '' : sort);
                         },
                       ),
+                      SizedBox(height: 10.h),
                     ],
                   ),
                 ),

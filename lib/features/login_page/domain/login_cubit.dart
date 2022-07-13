@@ -25,18 +25,15 @@ class LoginCubit extends Cubit<LoginState> {
     try {
       emit(state.copyWith(loading: true));
       List<String> data = await _loginDataStorage.loadData();
-      if (data.isNotEmpty) {
-        LoginEntity currentEntity = LoginEntity(
+      LoginEntity currentEntity = data.isNotEmpty ?
+        LoginEntity(
           server: data[0],
           database: data[1],
           login: data[2],
           password: data[3],
-        );
+        ): const LoginEntity();
         emit(state.copyWith(loginEntity: currentEntity, loading: false));
-      }
-    } catch (e) {
-      emit(state.copyWith(error: true));
-    }
+    } catch (e) {}
   }
 
   Future<void> saveLoginData(
@@ -44,9 +41,7 @@ class LoginCubit extends Cubit<LoginState> {
     try {
       List<String> data = [server, database, login, password];
       await _loginDataStorage.saveData(data: data);
-    } catch (e) {
-      emit(state.copyWith(error: true));
-    }
+    } catch (e) {}
   }
 
   Future<void> loginIn(String email, String password) async {

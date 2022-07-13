@@ -47,7 +47,7 @@ class AppSearchTextField extends StatelessWidget {
           fillColor: Colors.white,
           filled: true,
           hintText: 'Поиск видеозаписи...',
-          hintStyle: AppTextStyles.normalW600S14.copyWith(color: Colors.grey.shade800),
+          hintStyle: AppTextStyles.normalW700S16.copyWith(color: Colors.grey.shade800),
           contentPadding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 12.h),
           border: AppInputBorders.appBorder,
           focusedBorder: AppInputBorders.appBorder,

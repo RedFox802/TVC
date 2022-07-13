@@ -26,7 +26,6 @@ class _GeneralScreenState extends State<GeneralScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
     return Scaffold(
@@ -56,7 +55,7 @@ class _GeneralScreenState extends State<GeneralScreen> {
                     child: Column(
                       children: [
                         Container(
-                          height: height / 8,
+                          height: 80.h,
                           width: width,
                           decoration: BoxDecoration(
                             color: Colors.red.shade700,
@@ -69,7 +68,7 @@ class _GeneralScreenState extends State<GeneralScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               AppSearchTextField(
-                                width: width * 0.8,
+                                width: width * 0.75,
                               ),
                               AppButtonContainer(
                                 icon: Icons.filter_alt,
